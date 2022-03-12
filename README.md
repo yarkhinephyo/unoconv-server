@@ -87,24 +87,6 @@ Visit `http://127.0.0.1:4000/help`, or get help in command-line:
 ./unoconv-server help converter
 ```
 
-Here we use cURL for examples.
-
-### Uploading with `multipart/form-data`
-
-```shell
-curl -F file=@example.docx http://127.0.0.1:4000/convert/format/pdf/output/newname.pdf > result.pdf
-```
-
-### Uploading RAW binary data
-
-```shell
-curl -X POST \
--T "example.docx" \
--H "Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document" \
--H "Content-Disposition: attachment; filename="example.docx"" \
-http://127.0.0.1:4000/convert/format/pdf/output/newname.pdf > result.pdf
-```
-
 ### Converting options:
 
 ```shell
@@ -121,7 +103,12 @@ http://127.0.0.1:4000/convert/format/pdf/output/newname.pdf > result.pdf
 `unoconv-server` can start from docker without source code or npm installed:
 
 ```shell
-docker run -d -p 4000:4000 --name unoconv alphakevin/unoconv-server
+cd unoconv-server
+
+docker build -t unoconv-server .
+docker run -d -p 4000:4000 unoconv-server
+
+curl -F file=@example.pptx http://127.0.0.1:4000/convert/format/pdf/output/newname.pdf > result.pdf
 ```
 
 ## Notice
